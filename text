@@ -1,0 +1,134 @@
+// let form = document.querySelector("form");
+// let username = document.querySelector("#name");
+// let role = document.querySelector("#role");
+// let bio = document.querySelector("#bio");
+// let photo = document.querySelector("#photo");
+
+// let usermanager = {
+//   user: [],
+//   init: function () {
+//     form.addEventListener("submit", this.submitForm.bind(this));
+//   },
+//   submitForm: function (e) {
+//     e.preventDefault();
+//     this.adduser();
+//   },
+//   adduser: function () {
+//     this.user.push({
+//       username: username.value,
+//       role: role.value,
+//       bio: bio.value,
+//       photo: photo.value,
+//     });
+//     form.reset();
+//     this.renderui();
+//   },
+//   renderui: function () {
+//     const container = document.querySelector(".card-grid");
+//     container.innerHTML = "";
+
+//     this.user.forEach((user) => {
+//       const card = document.createElement("div");
+//       card.className = "user-card";
+
+//       const avatar = document.createElement("div");
+//       avatar.className = "avatar";
+
+//       const img = document.createElement("img");
+//       img.src = user.photo;
+//       img.alt = "user";
+
+//       avatar.appendChild(img);
+
+//       const name = document.createElement("h3");
+//       name.textContent = user.username;
+
+//       const role = document.createElement("p");
+//       role.className = "role";
+//       role.textContent = user.role;
+
+//       const bio = document.createElement("p");
+//       bio.className = "bio";
+//       bio.textContent = user.bio;
+
+//       card.append(avatar, name, role, bio);
+
+//       container.appendChild(card);
+//     });
+//   },
+//   removeuser: function () {},
+// };
+// usermanager.init();
+// ================= SELECT ELEMENTS =================
+const form = document.querySelector("form");
+const container = document.querySelector(".card-grid");
+
+// ================= USER MANAGER =================
+const usermanager = {
+  users: [],
+
+  init() {
+    form.addEventListener("submit", (e) => this.handleSubmit(e));
+    container.addEventListener("click", (e) => this.handleRemove(e));
+  },
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const newUser = {
+      username: formData.get("name").trim(),
+      role: formData.get("role").trim(),
+      bio: formData.get("bio").trim(),
+      photo: formData.get("photo").trim(),
+    };
+
+    if (Object.values(newUser).some((value) => !value)) {
+      alert("All fields are required");
+      return;
+    }
+
+    this.users.push(newUser);
+    form.reset();
+    this.render();
+  },
+
+  render() {
+    container.innerHTML = "";
+
+    const fragment = document.createDocumentFragment();
+
+    this.users.forEach((user, index) => {
+      const card = document.createElement("div");
+      card.className = "user-card";
+      card.dataset.index = index;
+
+      card.innerHTML = `
+        <div class="avatar">
+          <img src="${user.photo}" alt="${user.username}" />
+        </div>
+        <h3>${user.username}</h3>
+        <p class="role">${user.role}</p>
+        <p class="bio">${user.bio}</p>
+        <button class="remove-btn">Remove</button>
+      `;
+
+      fragment.appendChild(card);
+    });
+
+    container.appendChild(fragment);
+  },
+
+  handleRemove(e) {
+    if (!e.target.classList.contains("remove-btn")) return;
+
+    const card = e.target.closest(".user-card");
+    const index = card.dataset.index;
+
+    this.users.splice(index, 1);
+    this.render();
+  },
+};
+
+// ================= INIT =================
+usermanager.init();

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Card Creator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- ===== FORM ===== -->
+      <div class="form-card">
+        <h2>Add User</h2>
+
+        <form id="userForm">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="name" autocomplete="off"     />
+          </div>
+
+          <div class="form-group">
+            <label>Role</label>
+            <input type="text" id="role"  />
+          </div>
+
+          <div class="form-group">
+            <label>Bio</label>
+            <textarea id="bio" rows="3" ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Photo URL</label>
+            <input type="text" id="photo" required />
+          </div>
+
+          <button type="submit" class="btn">Submit</button>
+        </form>
+      </div>
+
+      <!-- ===== CARD CONTAINER ===== -->
+      <div class="card-grid" id="cardGrid">
+        <!-- Example Static Card (You will generate this using JS) -->
+        <!-- <div class="user-card">
+          <div class="avatar">
+            <img
+              src="https://randomuser.me/api/portraits/men/32.jpg"
+              alt="user"
+            />
+          </div>
+          <h3>John Doe</h3>
+          <p class="role">Frontend Developer</p>
+          <p class="bio">
+            Loves building beautiful UI and learning new technologies.
+          </p>
+        </div> -->
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
